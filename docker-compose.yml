@@ -13,3 +13,16 @@ services:
     restart: always
     env_file:
       - .env
+
+  frontend:
+    build:
+      context: ./my-project
+    container_name: thai-gold-frontend
+    ports:
+      - "5173:5173"
+    working_dir: /app
+    volumes:
+      - ./my-project:/app          # your source code for live-reload
+      - /app/node_modules         # anonymous volume → keeps the container’s own modules
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    restart: always
